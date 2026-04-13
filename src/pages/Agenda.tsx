@@ -247,7 +247,7 @@ export function Agenda({ store }: Props) {
                 {packages.map(p => <option key={p.id} value={p.id}>{p.name} — &euro;{p.price}</option>)}
               </select>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="grid-form-2col">
               <div className="form-group">
                 <label className="form-label">Datum</label>
                 <input type="date" className="form-input" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} />

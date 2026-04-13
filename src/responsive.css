@@ -1,5 +1,4 @@
 /* ─── Responsive grid utilities ─── */
-/* Use className instead of inline gridTemplateColumns */
 
 .grid-stats {
   display: grid;
@@ -51,6 +50,13 @@
   gap: 1rem;
 }
 
+/* Desktop: hide project back button, show X */
+.proj-back-btn { display: none; }
+.proj-close-btn { display: flex; }
+
+/* ═══════════════════════════════════════ */
+/* ═══ MOBILE: < 768px ═══ */
+/* ═══════════════════════════════════════ */
 @media (max-width: 768px) {
   .grid-stats {
     grid-template-columns: repeat(2, 1fr);
@@ -64,31 +70,29 @@
     margin-bottom: 1rem;
   }
 
-  .grid-2col {
-    grid-template-columns: 1fr;
-  }
+  .grid-2col { grid-template-columns: 1fr; }
+  .grid-cards { grid-template-columns: 1fr; }
+  .grid-notes { grid-template-columns: 1fr; }
+  .grid-agenda { grid-template-columns: 1fr; }
+  .grid-form-2col { grid-template-columns: 1fr; }
 
-  .grid-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .grid-notes {
-    grid-template-columns: 1fr;
-  }
-
-  .grid-agenda {
-    grid-template-columns: 1fr;
-  }
-
+  /* ─── Projecten: list/detail toggle ─── */
   .grid-projects {
     grid-template-columns: 1fr;
   }
 
-  .grid-form-2col {
-    grid-template-columns: 1fr;
+  .proj-list.has-selection {
+    display: none !important;
   }
 
-  /* Page header stack on mobile */
+  .proj-detail {
+    position: static !important;
+  }
+
+  .proj-back-btn { display: inline-flex; }
+  .proj-close-btn { display: none; }
+
+  /* ─── Page header: stack ─── */
   .page-header {
     flex-direction: column !important;
     gap: 0.75rem;
@@ -99,7 +103,7 @@
     align-self: flex-start;
   }
 
-  /* Filter tabs scroll horizontally */
+  /* ─── Filter/tab bars: horizontal scroll ─── */
   .filter-tabs {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -107,11 +111,22 @@
     padding-bottom: 0.25rem;
   }
 
-  .filter-tabs::-webkit-scrollbar {
-    display: none;
+  .filter-tabs::-webkit-scrollbar { display: none; }
+
+  /* ─── Facturen: card list instead of table ─── */
+  .factuur-table-desktop { display: none; }
+  .factuur-cards-mobile { display: flex !important; }
+
+  /* ─── Agenda calendar cells: smaller ─── */
+  .agenda-calendar-cell {
+    min-height: 52px !important;
+    padding: 0.25rem !important;
   }
 }
 
+/* ═══════════════════════════════════════ */
+/* ═══ SMALL MOBILE: < 480px ═══ */
+/* ═══════════════════════════════════════ */
 @media (max-width: 480px) {
   .grid-stats {
     grid-template-columns: 1fr 1fr;

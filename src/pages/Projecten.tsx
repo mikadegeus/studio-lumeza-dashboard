@@ -138,9 +138,9 @@ export function Projecten({ store }: Props) {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: activeProject ? '1fr 400px' : '1fr', gap: '1.5rem' }}>
+      <div className={activeProject ? 'grid-projects' : ''} style={{ display: activeProject ? undefined : 'block' }}>
         {/* Project list */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        <div className={`proj-list ${activeProject ? 'has-selection' : ''}`} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           {filtered.length === 0 ? (
             <div className="card">
               <div className="empty-state"><p>Geen projecten gevonden</p></div>
@@ -237,12 +237,15 @@ export function Projecten({ store }: Props) {
 
         {/* Detail panel */}
         {activeProject && (
-          <div className="card" style={{ alignSelf: 'start', position: 'sticky', top: '1rem' }}>
+          <div className="card proj-detail" style={{ alignSelf: 'start', position: 'sticky', top: '1rem' }}>
+            <button className="btn btn-secondary proj-back-btn" onClick={() => setSelectedProject(null)} style={{ marginBottom: '1rem', fontSize: '0.8125rem' }}>
+              ← Terug
+            </button>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: 'var(--cream)' }}>
                 {activeProject.title}
               </h3>
-              <button className="table-btn" onClick={() => setSelectedProject(null)}>
+              <button className="table-btn proj-close-btn" onClick={() => setSelectedProject(null)}>
                 <X size={18} />
               </button>
             </div>

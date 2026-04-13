@@ -202,43 +202,76 @@ export function Facturen({ store }: Props) {
       </div>
 
       {/* Invoice list */}
-      <div className="card">
-        {filtered.length === 0 ? (
+      {filtered.length === 0 ? (
+        <div className="card">
           <div className="empty-state"><p>{search || filterStatus !== 'all' ? 'Geen facturen gevonden' : 'Nog geen facturen'}</p></div>
-        ) : (
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Nummer</th>
-                  <th>Klant</th>
-                  <th>Bedrag</th>
-                  <th>Datum</th>
-                  <th>Vervaldatum</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map(inv => {
-                  const client = store.getClient(inv.clientId)
-                  return (
-                    <tr key={inv.id} style={{ cursor: 'pointer' }} onClick={() => openEdit(inv)}>
-                      <td style={{ fontWeight: 600 }}>{inv.invoiceNumber}</td>
-                      <td>{client?.name || '—'}</td>
-                      <td style={{ color: 'var(--gold-lighter)', fontFamily: 'var(--font-serif)', fontSize: '1rem' }}>
-                        &euro;{inv.total.toLocaleString('nl-NL')}
-                      </td>
-                      <td>{new Date(inv.issueDate).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })}</td>
-                      <td>{new Date(inv.dueDate).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })}</td>
-                      <td><span className={`badge ${STATUS_COLORS[inv.status]}`}>{STATUS_LABELS[inv.status]}</span></td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+        </div>
+      ) : (
+        <>
+          {/* Desktop: table */}
+          <div className="card factuur-table-desktop">
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nummer</th>
+                    <th>Klant</th>
+                    <th>Bedrag</th>
+                    <th>Datum</th>
+                    <th>Vervaldatum</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map(inv => {
+                    const client = store.getClient(inv.clientId)
+                    return (
+                      <tr key={inv.id} style={{ cursor: 'pointer' }} onClick={() => openEdit(inv)}>
+                        <td style={{ fontWeight: 600 }}>{inv.invoiceNumber}</td>
+                        <td>{client?.name || '—'}</td>
+                        <td style={{ color: 'var(--gold-lighter)', fontFamily: 'var(--font-serif)', fontSize: '1rem' }}>
+                          &euro;{inv.total.toLocaleString('nl-NL')}
+                        </td>
+                        <td>{new Date(inv.issueDate).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })}</td>
+                        <td>{new Date(inv.dueDate).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })}</td>
+                        <td><span className={`badge ${STATUS_COLORS[inv.status]}`}>{STATUS_LABELS[inv.status]}</span></td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
-        )}
-      </div>
+
+          {/* Mobile: card list */}
+          <div className="factuur-cards-mobile" style={{ display: 'none', flexDirection: 'column', gap: '0.75rem' }}>
+            {filtered.map(inv => {
+              const client = store.getClient(inv.clientId)
+              return (
+                <div key={inv.id} className="card" style={{ cursor: 'pointer' }} onClick={() => openEdit(inv)}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                    <div>
+                      <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--cream)' }}>{client?.name || '—'}</div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{inv.invoiceNumber}</div>
+                    </div>
+                    <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: 'var(--gold-lighter)' }}>
+                      &euro;{inv.total.toLocaleString('nl-NL')}
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                      {new Date(inv.issueDate).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })}
+                      {' → '}
+                      {new Date(inv.dueDate).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })}
+                    </div>
+                    <span className={`badge ${STATUS_COLORS[inv.status]}`}>{STATUS_LABELS[inv.status]}</span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </>
+      )}
 
       {/* Modal */}
       {showModal && (
@@ -249,7 +282,7 @@ export function Facturen({ store }: Props) {
               <button className="table-btn" onClick={() => setShowModal(false)}><X size={18} /></button>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="grid-form-2col">
               <div className="form-group">
                 <label className="form-label">Factuurnummer</label>
                 <input type="text" className="form-input" value={form.invoiceNumber} onChange={e => setForm({ ...form, invoiceNumber: e.target.value })} />
@@ -303,7 +336,7 @@ export function Facturen({ store }: Props) {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="grid-form-2col">
               <div className="form-group">
                 <label className="form-label">Factuurdatum</label>
                 <input type="date" className="form-input" value={form.issueDate} onChange={e => setForm({ ...form, issueDate: e.target.value })} />

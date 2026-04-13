@@ -339,7 +339,7 @@ export function Klanten({ store }: Props) {
               <label className="form-label">Naam</label>
               <input type="text" className="form-input" value={leadForm.name} onChange={e => setLeadForm({ ...leadForm, name: e.target.value })} placeholder="Volledige naam" />
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="grid-form-2col">
               <div className="form-group">
                 <label className="form-label">E-mail</label>
                 <input type="email" className="form-input" value={leadForm.email} onChange={e => setLeadForm({ ...leadForm, email: e.target.value })} placeholder="email@voorbeeld.nl" />
@@ -353,7 +353,7 @@ export function Klanten({ store }: Props) {
               <label className="form-label">Interesse</label>
               <input type="text" className="form-input" value={leadForm.interest} onChange={e => setLeadForm({ ...leadForm, interest: e.target.value })} placeholder="Bijv. Bruiloft, Zwangerschapsshoot" />
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="grid-form-2col">
               <div className="form-group">
                 <label className="form-label">Bron</label>
                 <input type="text" className="form-input" value={leadForm.source} onChange={e => setLeadForm({ ...leadForm, source: e.target.value })} placeholder="Instagram, website, mond-tot-mond" />
@@ -408,7 +408,7 @@ export function Klanten({ store }: Props) {
                 ))}
               </select>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="grid-form-2col">
               <div className="form-group">
                 <label className="form-label">E-mail</label>
                 <input type="email" className="form-input" value={networkForm.email} onChange={e => setNetworkForm({ ...networkForm, email: e.target.value })} />

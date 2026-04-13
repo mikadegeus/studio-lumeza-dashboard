@@ -71,7 +71,7 @@ export function Portfolio({ store }: Props) {
           </div>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
+        <div className="grid-cards">
           {portfolio.map(item => {
             const client = item.clientId ? store.getClient(item.clientId) : null
             const pkg = item.packageId ? store.getPackage(item.packageId) : null
@@ -141,7 +141,7 @@ export function Portfolio({ store }: Props) {
               <label className="form-label">Afbeelding URL (optioneel)</label>
               <input type="url" className="form-input" value={form.imageUrl} onChange={e => setForm({ ...form, imageUrl: e.target.value })} placeholder="https://..." />
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="grid-form-2col">
               <div className="form-group">
                 <label className="form-label">Klant (optioneel)</label>
                 <select className="form-select" value={form.clientId} onChange={e => setForm({ ...form, clientId: e.target.value })}>
