@@ -181,11 +181,6 @@
     flex-shrink: 0;
   }
 
-  .cs-tab-icon { font-size: 1.125rem; }
-
-  .cs-tab-label { display: none; }
-
-  .cs-tab.active .cs-tab-label { display: inline; }
 
   /* Content: fills remaining space, scrollable */
   .cs-content {

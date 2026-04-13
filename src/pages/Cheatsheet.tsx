@@ -72,8 +72,7 @@ export function Cheatsheet({ store }: Props) {
             className={`cs-tab ${activeId === sheet.id ? 'active' : ''}`}
             onClick={() => setActiveId(sheet.id)}
           >
-            <span className="cs-tab-icon">{sheet.icon}</span>
-            <span className="cs-tab-label">{sheet.name}</span>
+            {sheet.name}
           </button>
         ))}
         {editMode && (
@@ -87,7 +86,6 @@ export function Cheatsheet({ store }: Props) {
       {activeSheet && (
         <div className="cs-content">
           <div className="cs-sheet-header">
-            <span className="cs-sheet-icon">{activeSheet.icon}</span>
             <h2 className="cs-sheet-title">{activeSheet.name}</h2>
             {editMode && (
               <button
