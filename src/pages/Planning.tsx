@@ -58,7 +58,7 @@ export function Planning({ store }: Props) {
       </div>
 
       {/* Quick stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
+      <div className="grid-stats-3">
         <div className="card" style={{ textAlign: 'center' }}>
           <div className="stat-value" style={{ color: overdueTasks.length > 0 ? '#f87171' : 'var(--cream)' }}>
             {overdueTasks.length}

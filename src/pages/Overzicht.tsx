@@ -31,7 +31,7 @@ export function Overzicht({ store }: Props) {
       </div>
 
       {/* Stats Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
+      <div className="grid-stats">
         <div className="card" style={{ cursor: 'pointer' }} onClick={() => navigate('/dashboard/klanten')}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
             <div style={{ width: 36, height: 36, borderRadius: 8, background: 'var(--gold-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold-lighter)' }}>
@@ -74,7 +74,7 @@ export function Overzicht({ store }: Props) {
       </div>
 
       {/* Two column layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div className="grid-2col">
         {/* Upcoming shoots */}
         <div className="card">
           <div className="card-header">

@@ -197,7 +197,7 @@ export function Klanten({ store }: Props) {
 
       {/* ═══ KLANTEN TAB ═══ */}
       {tab === 'klanten' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1rem' }}>
+        <div className="grid-cards">
           {filteredClients.map(client => {
             const clientShoots = getClientShoots(client.id)
             return (
@@ -229,7 +229,7 @@ export function Klanten({ store }: Props) {
 
       {/* ═══ LEADS TAB ═══ */}
       {tab === 'leads' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1rem' }}>
+        <div className="grid-cards">
           {filteredLeads.map(lead => (
             <div key={lead.id} className="card" style={{ cursor: 'pointer' }} onClick={() => openEditLead(lead)}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
@@ -261,7 +261,7 @@ export function Klanten({ store }: Props) {
 
       {/* ═══ NETWERK TAB ═══ */}
       {tab === 'netwerk' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1rem' }}>
+        <div className="grid-cards">
           {filteredNetwork.map(contact => (
             <div key={contact.id} className="card" style={{ cursor: 'pointer' }} onClick={() => openEditNetwork(contact)}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>

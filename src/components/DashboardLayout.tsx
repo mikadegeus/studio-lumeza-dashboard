@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import {
   LayoutDashboard,
@@ -11,6 +12,8 @@ import {
   StickyNote,
   Settings,
   ArrowLeft,
+  Menu,
+  X,
 } from 'lucide-react'
 import './DashboardLayout.css'
 
@@ -28,12 +31,32 @@ const navItems = [
 ]
 
 export function DashboardLayout() {
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  const closeMobile = () => setMobileOpen(false)
+
   return (
     <div className="dash">
-      <aside className="dash-sidebar">
+      {/* Mobile header */}
+      <header className="dash-mobile-header">
+        <button className="dash-mobile-toggle" onClick={() => setMobileOpen(true)}>
+          <Menu size={22} />
+        </button>
+        <img src="/logo-lumeza.jpg" alt="Studio Lumeza" className="dash-logo" />
+        <span className="dash-brand">Studio Lumeza</span>
+      </header>
+
+      {/* Overlay */}
+      {mobileOpen && <div className="dash-overlay" onClick={closeMobile} />}
+
+      {/* Sidebar */}
+      <aside className={`dash-sidebar ${mobileOpen ? 'open' : ''}`}>
         <div className="dash-sidebar-top">
           <img src="/logo-lumeza.jpg" alt="Studio Lumeza" className="dash-logo" />
           <span className="dash-brand">Studio Lumeza</span>
+          <button className="dash-mobile-close" onClick={closeMobile}>
+            <X size={20} />
+          </button>
         </div>
         <nav className="dash-nav">
           {navItems.map((item) => (
@@ -41,6 +64,7 @@ export function DashboardLayout() {
               key={item.to}
               to={item.to}
               end={item.end}
+              onClick={closeMobile}
               className={({ isActive }) =>
                 `dash-nav-item ${isActive ? 'active' : ''}`
               }
@@ -51,12 +75,13 @@ export function DashboardLayout() {
           ))}
         </nav>
         <div className="dash-sidebar-bottom">
-          <NavLink to="/" className="dash-nav-item dash-back">
+          <NavLink to="/welkom" className="dash-nav-item dash-back" onClick={closeMobile}>
             <ArrowLeft size={18} strokeWidth={1.5} />
             <span>Terug naar home</span>
           </NavLink>
         </div>
       </aside>
+
       <main className="dash-main">
         <Outlet />
       </main>

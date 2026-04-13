@@ -104,7 +104,7 @@ export function Notities({ store }: Props) {
           </div>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '0.75rem' }}>
+        <div className="grid-notes">
           {filtered.map(note => {
             const c = getColor(note.color)
             return (

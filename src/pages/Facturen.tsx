@@ -161,7 +161,7 @@ export function Facturen({ store }: Props) {
       </div>
 
       {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
+      <div className="grid-stats-3">
         <div className="card" style={{ textAlign: 'center' }}>
           <div className="stat-value" style={{ color: '#4ade80' }}>&euro;{totalBetaald.toLocaleString('nl-NL')}</div>
           <div className="stat-label">Betaald</div>
