@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Plus, Pin, PinOff, Trash2, X, Search } from 'lucide-react'
+import { Plus, Pin, Trash2, X, Search } from 'lucide-react'
 import type { useStore } from '../store'
 import type { Note } from '../types'
 

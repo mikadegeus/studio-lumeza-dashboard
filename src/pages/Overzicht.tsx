@@ -16,7 +16,6 @@ export function Overzicht({ store }: Props) {
     .slice(0, 5)
 
   const pendingTasks = tasks.filter(t => !t.completed).slice(0, 5)
-  const completedShoots = shoots.filter(s => s.status === 'afgerond').length
   const totalRevenue = shoots
     .filter(s => s.status === 'afgerond' || s.status === 'bevestigd')
     .reduce((sum, s) => {

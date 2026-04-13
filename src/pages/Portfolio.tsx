@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Plus, X, Trash2, Image, ExternalLink } from 'lucide-react'
+import { Plus, X, Trash2, Image } from 'lucide-react'
 import type { useStore } from '../store'
 
 interface Props {

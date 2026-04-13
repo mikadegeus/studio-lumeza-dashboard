@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Plus, Edit2, Trash2, X, Check } from 'lucide-react'
+import { Plus, Trash2, X, Check } from 'lucide-react'
 import type { useStore } from '../store'
 import type { PackageOption } from '../types'
 

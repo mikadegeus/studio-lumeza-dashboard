@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Plus, X, Search, Trash2, FileText, Euro } from 'lucide-react'
+import { Plus, X, Search, Trash2 } from 'lucide-react'
 import type { useStore } from '../store'
 import type { Invoice, InvoiceStatus, InvoiceLine } from '../types'
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import type { StoreState, Client, PackageOption, Shoot, Task, PortfolioItem, Project, ProjectNote, ProjectStatus, Lead, NetworkContact, PackListItem, PackPresetCategory, Note, Invoice } from './types'
+import type { StoreState, Client, PackageOption, Shoot, Task, PortfolioItem, Project, ProjectNote, ProjectStatus, Lead, NetworkContact, PackListItem, Note, Invoice } from './types'
 
 const STORAGE_KEY = 'studio-lumeza-data'
 

@@ -38,7 +38,7 @@ function getStepIndex(status: ProjectStatus): number {
 }
 
 export function Projecten({ store }: Props) {
-  const { projects, clients, shoots, packages, tasks, packPresets = [] } = store
+  const { projects, clients, shoots, packages, packPresets = [] } = store
   const [showModal, setShowModal] = useState(false)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [noteText, setNoteText] = useState('')
