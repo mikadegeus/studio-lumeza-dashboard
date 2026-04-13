@@ -100,9 +100,9 @@ export function Cheatsheet({ store }: Props) {
 
           <div className="cs-tips">
             {activeSheet.tips.map(tip => (
-              <div key={tip.id} className="cs-tip">
+              <div key={tip.id} className={`cs-tip ${tip.title === 'Extra tips' ? 'cs-tip-extra' : ''}`}>
                 <div className="cs-tip-label">{tip.title}</div>
-                <div className="cs-tip-value">{tip.value}</div>
+                <div className="cs-tip-value" style={{ whiteSpace: 'pre-wrap' }}>{tip.value}</div>
                 {editMode && (
                   <button
                     className="cs-tip-delete"
@@ -151,7 +151,10 @@ export function Cheatsheet({ store }: Props) {
                   {newTipTitle && (
                     <div>
                       <div className="form-label">
-                        {newTipTitle}: vul je instelling in
+                        {newTipTitle === 'Extra tips'
+                          ? 'Extra tips: schrijf elke tip op een nieuwe regel'
+                          : `${newTipTitle}: vul je instelling in`
+                        }
                       </div>
                       <textarea
                         className="form-textarea"
@@ -166,9 +169,14 @@ export function Cheatsheet({ store }: Props) {
                           newTipTitle === 'Witbalans' ? 'Bijv. Bewolkt, 5600K, auto' :
                           newTipTitle === 'Transportfunctie' ? 'Bijv. Continu hoog, stille sluiter' :
                           newTipTitle === 'Nabewerking' ? 'Bijv. Warme tinten, +0.5 belichting, zachte huid' :
+                          newTipTitle === 'Extra tips' ? 'Bijv.\nModel ontspannen laten poseren\nAltijd een testfoto maken\nLet op achtergrond rommel' :
                           'Vul je informatie in...'
                         }
-                        style={{ minHeight: 80, fontSize: '0.875rem', lineHeight: 1.6 }}
+                        style={{
+                          minHeight: newTipTitle === 'Extra tips' ? 140 : 80,
+                          fontSize: '0.875rem',
+                          lineHeight: 1.6,
+                        }}
                       />
                     </div>
                   )}

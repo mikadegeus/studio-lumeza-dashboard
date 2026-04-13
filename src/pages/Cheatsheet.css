@@ -105,6 +105,22 @@
   line-height: 1.5;
 }
 
+/* Extra tips: full width, list style */
+.cs-tip-extra {
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.cs-tip-extra .cs-tip-label {
+  width: auto;
+}
+
+.cs-tip-extra .cs-tip-value {
+  padding-left: 0.25rem;
+  border-left: 2px solid var(--gold-muted);
+  margin-left: 0;
+}
+
 .cs-tip-delete {
   position: absolute;
   right: 0.75rem;
