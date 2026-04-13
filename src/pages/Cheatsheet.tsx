@@ -8,6 +8,18 @@ interface Props {
   store: ReturnType<typeof useStore>
 }
 
+const TIP_LABELS = [
+  'Diafragma',
+  'Sluitertijd',
+  'ISO',
+  'Focus',
+  'Brandpuntafstand',
+  'Witbalans',
+  'Transportfunctie',
+  'Extra tips',
+  'Nabewerking',
+]
+
 export function Cheatsheet({ store }: Props) {
   const sheets: CheatsheetCategory[] = store.cheatsheets || []
   const [activeId, setActiveId] = useState<string | null>(sheets[0]?.id ?? null)
@@ -109,27 +121,72 @@ export function Cheatsheet({ store }: Props) {
           {editMode && (
             <div className="cs-add-tip">
               {newTipCatId === activeSheet.id ? (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={newTipTitle}
-                    onChange={e => setNewTipTitle(e.target.value)}
-                    placeholder="Label (bijv. Diafragma, Sluitertijd)"
-                    style={{ fontSize: '0.875rem' }}
-                  />
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={newTipValue}
-                    onChange={e => setNewTipValue(e.target.value)}
-                    placeholder="Waarde (bijv. f/2.8 voor portret)"
-                    style={{ fontSize: '0.875rem' }}
-                    onKeyDown={e => e.key === 'Enter' && addTip()}
-                  />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {/* Label selector */}
+                  <div>
+                    <div className="form-label" style={{ marginBottom: '0.5rem' }}>Kies een label</div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem' }}>
+                      {TIP_LABELS.map(label => (
+                        <button
+                          key={label}
+                          onClick={() => setNewTipTitle(label)}
+                          style={{
+                            fontSize: '0.75rem',
+                            padding: '0.375rem 0.75rem',
+                            borderRadius: 6,
+                            border: '1px solid',
+                            borderColor: newTipTitle === label ? 'var(--gold)' : 'var(--black-border)',
+                            background: newTipTitle === label ? 'var(--gold-muted)' : 'rgba(255,255,255,0.03)',
+                            color: newTipTitle === label ? 'var(--gold-lighter)' : 'var(--text-secondary)',
+                            cursor: 'pointer',
+                            transition: 'all 150ms',
+                            minHeight: 36,
+                          }}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Value input — only visible after selecting a label */}
+                  {newTipTitle && (
+                    <div>
+                      <div className="form-label">
+                        {newTipTitle}: vul je instelling in
+                      </div>
+                      <textarea
+                        className="form-textarea"
+                        value={newTipValue}
+                        onChange={e => setNewTipValue(e.target.value)}
+                        placeholder={
+                          newTipTitle === 'Diafragma' ? 'Bijv. f/1.4 – f/2.8 voor zachte achtergrond' :
+                          newTipTitle === 'Sluitertijd' ? 'Bijv. 1/200s of sneller' :
+                          newTipTitle === 'ISO' ? 'Bijv. 100-400 buiten, tot 1600 binnen' :
+                          newTipTitle === 'Focus' ? 'Bijv. Eye-AF, enkel punt, tracking' :
+                          newTipTitle === 'Brandpuntafstand' ? 'Bijv. 85mm voor portret, 24-70mm voor bruiloft' :
+                          newTipTitle === 'Witbalans' ? 'Bijv. Bewolkt, 5600K, auto' :
+                          newTipTitle === 'Transportfunctie' ? 'Bijv. Continu hoog, stille sluiter' :
+                          newTipTitle === 'Nabewerking' ? 'Bijv. Warme tinten, +0.5 belichting, zachte huid' :
+                          'Vul je informatie in...'
+                        }
+                        style={{ minHeight: 80, fontSize: '0.875rem', lineHeight: 1.6 }}
+                      />
+                    </div>
+                  )}
+
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <button className="btn btn-primary btn-sm" onClick={addTip}><Plus size={14} /> Toevoegen</button>
-                    <button className="btn btn-secondary" onClick={() => setNewTipCatId(null)} style={{ fontSize: '0.8125rem' }}>Annuleren</button>
+                    <button
+                      className="btn btn-primary btn-sm"
+                      onClick={addTip}
+                      disabled={!newTipTitle || !newTipValue.trim()}
+                      style={{ opacity: (!newTipTitle || !newTipValue.trim()) ? 0.5 : 1 }}
+                    >
+                      <Plus size={14} /> Toevoegen
+                    </button>
+                    <button className="btn btn-secondary" onClick={() => { setNewTipCatId(null); setNewTipTitle(''); setNewTipValue('') }} style={{ fontSize: '0.8125rem' }}>
+                      Annuleren
+                    </button>
                   </div>
                 </div>
               ) : (
