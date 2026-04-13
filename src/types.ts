@@ -135,6 +135,19 @@ export interface Invoice {
   createdAt: string
 }
 
+export interface CheatsheetTip {
+  id: string
+  title: string
+  value: string
+}
+
+export interface CheatsheetCategory {
+  id: string
+  name: string
+  icon: string
+  tips: CheatsheetTip[]
+}
+
 export interface PackPresetCategory {
   id: string
   name: string
@@ -153,4 +166,5 @@ export interface StoreState {
   packPresets: PackPresetCategory[]
   notes: Note[]
   invoices: Invoice[]
+  cheatsheets: CheatsheetCategory[]
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import type { StoreState, Client, PackageOption, Shoot, Task, PortfolioItem, Project, ProjectNote, ProjectStatus, Lead, NetworkContact, PackListItem, Note, Invoice } from './types'
+import type { StoreState, Client, PackageOption, Shoot, Task, PortfolioItem, Project, ProjectNote, ProjectStatus, Lead, NetworkContact, PackListItem, Note, Invoice, CheatsheetCategory, CheatsheetTip } from './types'
 
 const STORAGE_KEY = 'studio-lumeza-data'
 
@@ -154,6 +154,54 @@ const defaultState: StoreState = {
     { id: 'inv-1', invoiceNumber: 'LUM-2026-001', clientId: 'c-1', projectId: 'proj-1', lines: [{ description: 'Bruiloft Premium pakket', amount: 2200 }], total: 2200, status: 'verstuurd', issueDate: '2026-03-15', dueDate: '2026-04-15', notes: 'Aanbetaling 50% bij boeking', createdAt: '2026-03-15' },
     { id: 'inv-2', invoiceNumber: 'LUM-2026-002', clientId: 'c-2', projectId: 'proj-2', lines: [{ description: 'Zwangerschapsshoot pakket', amount: 350 }], total: 350, status: 'betaald', issueDate: '2026-03-20', dueDate: '2026-04-20', paidDate: '2026-03-25', notes: '', createdAt: '2026-03-20' },
     { id: 'inv-3', invoiceNumber: 'LUM-2026-003', clientId: 'c-3', lines: [{ description: 'Newborn / Kids pakket', amount: 300 }], total: 300, status: 'concept', issueDate: '2026-04-10', dueDate: '2026-05-10', notes: 'Wacht op bevestiging geboortedatum', createdAt: '2026-04-10' },
+  ],
+  cheatsheets: [
+    { id: 'cs-1', name: 'Portret', icon: '👤', tips: [
+      { id: 'ct-1', title: 'Diafragma', value: 'f/1.4 – f/2.8 voor zachte achtergrond' },
+      { id: 'ct-2', title: 'Sluitertijd', value: '1/200s of sneller (minimaal 1/brandpuntsafstand)' },
+      { id: 'ct-3', title: 'ISO', value: 'Zo laag mogelijk, buiten 100-400, binnen tot 1600' },
+      { id: 'ct-4', title: 'Lens', value: '85mm f/1.4 of 50mm f/1.2' },
+      { id: 'ct-5', title: 'Focus', value: 'Eye-AF, altijd op het dichtstbijzijnde oog' },
+      { id: 'ct-6', title: 'Witbalans', value: 'Bewolkt voor warmere tint, of handmatig 5600K' },
+      { id: 'ct-7', title: 'Tip', value: 'Laat het model licht draaien, schouder naar camera' },
+    ]},
+    { id: 'cs-2', name: 'Bruiloft', icon: '💒', tips: [
+      { id: 'ct-10', title: 'Ceremonie', value: 'f/2.8, 1/250s, ISO auto (max 6400), stille sluiter AAN' },
+      { id: 'ct-11', title: 'Groepsfoto', value: 'f/5.6 – f/8 zodat iedereen scherp is' },
+      { id: 'ct-12', title: 'Receptie / feest', value: 'Flits bounce van plafond, 1/60s, f/2.8, ISO 1600-3200' },
+      { id: 'ct-13', title: 'Details / ringen', value: 'Macro of 50mm dichtbij, f/2.8, natuurlijk licht' },
+      { id: 'ct-14', title: 'Golden hour', value: 'f/1.8, tegenlicht, reflector of videolamp als fill' },
+      { id: 'ct-15', title: 'Backup', value: '2e camera body klaar, extra kaarten in broekzak' },
+    ]},
+    { id: 'cs-3', name: 'Zwangerschap', icon: '🤰', tips: [
+      { id: 'ct-20', title: 'Diafragma', value: 'f/2.0 – f/3.5 voor zachte, dromerige look' },
+      { id: 'ct-21', title: 'Belichting', value: 'Iets overbelicht (+0.3 tot +0.7 EV) voor glow' },
+      { id: 'ct-22', title: 'Licht', value: 'Groot softbox of raamlicht, 45° hoek' },
+      { id: 'ct-23', title: 'Pose', value: 'Handen op buik, 45° gedraaid, gewicht op achterste been' },
+      { id: 'ct-24', title: 'Sluiers', value: 'Wind of assistent voor beweging, sluitertijd 1/500s' },
+    ]},
+    { id: 'cs-4', name: 'Newborn / Kids', icon: '👶', tips: [
+      { id: 'ct-30', title: 'Diafragma', value: 'f/2.8 – f/4 (iets meer scherptediepte voor veiligheid)' },
+      { id: 'ct-31', title: 'Sluitertijd', value: '1/160s+ (kinderen bewegen snel!)' },
+      { id: 'ct-32', title: 'ISO', value: 'Tot 1600, ruis is acceptabel bij newborn' },
+      { id: 'ct-33', title: 'Temperatuur', value: 'Studio 24-26°C voor newborn comfort' },
+      { id: 'ct-34', title: 'Geluid', value: 'White noise app aan, stille sluiter AAN' },
+      { id: 'ct-35', title: 'Veiligheid', value: 'Altijd een ouder binnen armlengte bij baby poses' },
+    ]},
+    { id: 'cs-5', name: 'Buiten / Landschap', icon: '🌅', tips: [
+      { id: 'ct-40', title: 'Golden hour', value: '1 uur na zonsopkomst / voor zonsondergang' },
+      { id: 'ct-41', title: 'Diafragma', value: 'f/8 – f/11 voor maximale scherpte' },
+      { id: 'ct-42', title: 'ISO', value: '100, altijd statief gebruiken' },
+      { id: 'ct-43', title: 'Filters', value: 'Polarisatiefilter voor blauwe lucht, ND voor lang belichten' },
+      { id: 'ct-44', title: 'Compositie', value: 'Regel van derden, leidende lijnen, voorgrond-element' },
+    ]},
+    { id: 'cs-6', name: 'Low Light / Avond', icon: '🌙', tips: [
+      { id: 'ct-50', title: 'Diafragma', value: 'Zo open mogelijk: f/1.4 – f/2.0' },
+      { id: 'ct-51', title: 'ISO', value: '3200 – 6400 (afhankelijk van camera)' },
+      { id: 'ct-52', title: 'Sluitertijd', value: '1/60s minimum handheld, langzamer met stabilisatie' },
+      { id: 'ct-53', title: 'Focus', value: 'Handmatig of enkel AF-punt, peaking aan' },
+      { id: 'ct-54', title: 'Flits', value: 'Bounce of diffuser, nooit direct frontaal' },
+    ]},
   ],
 }
 
@@ -355,6 +403,43 @@ export function useStore() {
     update(s => ({ ...s, network: s.network.filter(n => n.id !== id) }))
   }, [update])
 
+  // Cheatsheets
+  const addCheatsheetCategory = useCallback((name: string, icon: string) => {
+    update(s => ({ ...s, cheatsheets: [...(s.cheatsheets || []), { id: generateId(), name, icon, tips: [] }] }))
+  }, [update])
+
+  const updateCheatsheetCategory = useCallback((id: string, data: Partial<CheatsheetCategory>) => {
+    update(s => ({ ...s, cheatsheets: (s.cheatsheets || []).map(c => c.id === id ? { ...c, ...data } : c) }))
+  }, [update])
+
+  const deleteCheatsheetCategory = useCallback((id: string) => {
+    update(s => ({ ...s, cheatsheets: (s.cheatsheets || []).filter(c => c.id !== id) }))
+  }, [update])
+
+  const addCheatsheetTip = useCallback((categoryId: string, title: string, value: string) => {
+    const tip: CheatsheetTip = { id: generateId(), title, value }
+    update(s => ({
+      ...s,
+      cheatsheets: (s.cheatsheets || []).map(c => c.id === categoryId ? { ...c, tips: [...c.tips, tip] } : c),
+    }))
+  }, [update])
+
+  const updateCheatsheetTip = useCallback((categoryId: string, tipId: string, data: Partial<CheatsheetTip>) => {
+    update(s => ({
+      ...s,
+      cheatsheets: (s.cheatsheets || []).map(c => c.id === categoryId ? {
+        ...c, tips: c.tips.map(t => t.id === tipId ? { ...t, ...data } : t),
+      } : c),
+    }))
+  }, [update])
+
+  const deleteCheatsheetTip = useCallback((categoryId: string, tipId: string) => {
+    update(s => ({
+      ...s,
+      cheatsheets: (s.cheatsheets || []).map(c => c.id === categoryId ? { ...c, tips: c.tips.filter(t => t.id !== tipId) } : c),
+    }))
+  }, [update])
+
   // Invoices
   const addInvoice = useCallback((invoice: Omit<Invoice, 'id' | 'createdAt'>) => {
     update(s => ({ ...s, invoices: [...(s.invoices || []), { ...invoice, id: generateId(), createdAt: new Date().toISOString().slice(0, 10) }] }))
@@ -429,6 +514,8 @@ export function useStore() {
     addPackListItem, togglePackListItem, deletePackListItem,
     addLead, updateLead, deleteLead, convertLeadToClient,
     addNetworkContact, updateNetworkContact, deleteNetworkContact,
+    addCheatsheetCategory, updateCheatsheetCategory, deleteCheatsheetCategory,
+    addCheatsheetTip, updateCheatsheetTip, deleteCheatsheetTip,
     addInvoice, updateInvoice, deleteInvoice,
     addNote, updateNote, deleteNote, togglePinNote,
     addPresetCategory, updatePresetCategory, deletePresetCategory,

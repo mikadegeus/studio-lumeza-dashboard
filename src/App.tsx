@@ -8,6 +8,7 @@ import { Pakketten } from './pages/Pakketten'
 import { Planning } from './pages/Planning'
 import { Portfolio } from './pages/Portfolio'
 import { Projecten } from './pages/Projecten'
+import { Cheatsheet } from './pages/Cheatsheet'
 import { Facturen } from './pages/Facturen'
 import { Notities } from './pages/Notities'
 import { Instellingen } from './pages/Instellingen'
@@ -32,6 +33,7 @@ function App() {
           <Route path="facturen" element={<Facturen store={store} />} />
           <Route path="portfolio" element={<Portfolio store={store} />} />
           <Route path="notities" element={<Notities store={store} />} />
+          <Route path="cheatsheet" element={<Cheatsheet store={store} />} />
           <Route path="instellingen" element={<Instellingen store={store} />} />
         </Route>
       </Routes>

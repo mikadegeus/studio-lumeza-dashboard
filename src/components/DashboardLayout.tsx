@@ -10,6 +10,7 @@ import {
   Star,
   Receipt,
   StickyNote,
+  BookOpen,
   Settings,
   ArrowLeft,
   Menu,
@@ -27,6 +28,7 @@ const navItems = [
   { to: '/dashboard/facturen', icon: Receipt, label: 'Facturen' },
   { to: '/dashboard/portfolio', icon: Star, label: 'Portfolio' },
   { to: '/dashboard/notities', icon: StickyNote, label: 'Notities' },
+  { to: '/dashboard/cheatsheet', icon: BookOpen, label: 'Cheatsheet' },
   { to: '/dashboard/instellingen', icon: Settings, label: 'Instellingen' },
 ]
 
