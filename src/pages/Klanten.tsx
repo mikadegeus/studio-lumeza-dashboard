@@ -146,7 +146,7 @@ export function Klanten({ store }: Props) {
 
   return (
     <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header">
         <div>
           <h1 className="page-title">Contacten</h1>
           <p className="page-subtitle">
@@ -159,7 +159,7 @@ export function Klanten({ store }: Props) {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem' }}>
+      <div className="filter-tabs" style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem' }}>
         {[
           { key: 'klanten' as Tab, label: 'Klanten', icon: Users, count: clients.length },
           { key: 'leads' as Tab, label: 'Leads', icon: UserPlus, count: leads.length },

@@ -150,7 +150,7 @@ export function Facturen({ store }: Props) {
 
   return (
     <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header">
         <div>
           <h1 className="page-title">Facturen</h1>
           <p className="page-subtitle">{invoices.length} factuur{invoices.length !== 1 ? 'en' : ''}</p>

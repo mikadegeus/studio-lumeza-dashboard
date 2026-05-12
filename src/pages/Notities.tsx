@@ -85,7 +85,7 @@ export function Notities({ store }: Props) {
     <div className="notities-layout">
       {/* ─── Left: List ─── */}
       <div className={`notities-list ${selectedId ? 'has-selection' : ''}`}>
-        <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div className="page-header">
           <div>
             <h1 className="page-title">Notities</h1>
             <p className="page-subtitle">{notes.length} notitie{notes.length !== 1 ? 's' : ''}</p>

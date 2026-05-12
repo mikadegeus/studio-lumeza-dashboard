@@ -111,7 +111,7 @@ export function Agenda({ store }: Props) {
 
   return (
     <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header">
         <div>
           <h1 className="page-title">Agenda</h1>
           <p className="page-subtitle">Plan en beheer al je shoots</p>
@@ -133,7 +133,7 @@ export function Agenda({ store }: Props) {
           </div>
 
           {/* Day headers */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 2, marginBottom: 4 }}>
+          <div className="agenda-calendar-headers">
             {['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'].map(d => (
               <div key={d} style={{ textAlign: 'center', fontSize: '0.6875rem', color: 'var(--text-muted)', padding: '0.5rem 0', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
                 {d}
@@ -142,7 +142,7 @@ export function Agenda({ store }: Props) {
           </div>
 
           {/* Calendar grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 2 }}>
+          <div className="agenda-calendar-grid">
             {calendarDays.map((day, i) => {
               if (day === null) return <div key={`empty-${i}`} />
               const dayShots = getShootsForDay(day)
@@ -151,14 +151,10 @@ export function Agenda({ store }: Props) {
                 <div
                   key={day}
                   onClick={() => openNewShoot(day)}
+                  className="agenda-calendar-cell"
                   style={{
-                    minHeight: 72,
-                    padding: '0.375rem',
-                    borderRadius: 8,
                     border: isToday ? '1px solid var(--gold)' : '1px solid transparent',
                     background: dayShots.length > 0 ? 'var(--gold-muted)' : 'rgba(255,255,255,0.02)',
-                    cursor: 'pointer',
-                    transition: 'background 200ms',
                   }}
                 >
                   <div style={{ fontSize: '0.75rem', color: isToday ? 'var(--gold-lighter)' : 'var(--text-secondary)', marginBottom: 4, fontWeight: isToday ? 600 : 400 }}>

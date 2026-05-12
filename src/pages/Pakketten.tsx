@@ -83,7 +83,7 @@ export function Pakketten({ store }: Props) {
 
   return (
     <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header">
         <div>
           <h1 className="page-title">Pakketten</h1>
           <p className="page-subtitle">Beheer je fotografie-pakketten en prijzen</p>
