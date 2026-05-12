@@ -247,6 +247,19 @@ export function useStore(userId: string) {
     })
   }, [userId])
 
+  const restoreFromLocalStorage = useCallback((): 'ok' | 'leeg' | 'fout' => {
+    try {
+      const raw = localStorage.getItem('studio-lumeza-data')
+      if (!raw) return 'leeg'
+      const parsed = JSON.parse(raw)
+      update(() => ({ ...defaultState, ...parsed }))
+      localStorage.removeItem('studio-lumeza-data')
+      return 'ok'
+    } catch {
+      return 'fout'
+    }
+  }, [update])
+
   // Clients
   const addClient = useCallback((client: Omit<Client, 'id' | 'createdAt'>) => {
     update(s => ({ ...s, clients: [...s.clients, { ...client, id: generateId(), createdAt: new Date().toISOString().slice(0, 10) }] }))
@@ -531,5 +544,6 @@ export function useStore(userId: string) {
     addPresetCategory, updatePresetCategory, deletePresetCategory,
     addPresetItem, deletePresetItem,
     getClient, getPackage,
+    restoreFromLocalStorage,
   }
 }
