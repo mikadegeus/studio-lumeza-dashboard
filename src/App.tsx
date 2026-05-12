@@ -1,4 +1,9 @@
+import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { onAuthStateChanged } from 'firebase/auth'
+import type { User } from 'firebase/auth'
+import { auth } from './firebase'
+import { Login } from './components/Login'
 import { LandingPage } from './components/LandingPage'
 import { DashboardLayout } from './components/DashboardLayout'
 import { Overzicht } from './pages/Overzicht'
@@ -15,8 +20,20 @@ import { Instellingen } from './pages/Instellingen'
 import { useStore } from './store'
 import './App.css'
 
-function App() {
-  const store = useStore()
+function AppLoading() {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--black)' }}>
+      <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', color: 'var(--gold-lighter)' }}>
+        Studio Lumeza
+      </span>
+    </div>
+  )
+}
+
+function Dashboard({ userId }: { userId: string }) {
+  const store = useStore(userId)
+
+  if (store.loading) return <AppLoading />
 
   return (
     <BrowserRouter>
@@ -39,6 +56,22 @@ function App() {
       </Routes>
     </BrowserRouter>
   )
+}
+
+function App() {
+  const [user, setUser] = useState<User | null>(null)
+  const [authLoading, setAuthLoading] = useState(true)
+
+  useEffect(() => {
+    return onAuthStateChanged(auth, firebaseUser => {
+      setUser(firebaseUser)
+      setAuthLoading(false)
+    })
+  }, [])
+
+  if (authLoading) return <AppLoading />
+  if (!user) return <Login />
+  return <Dashboard userId={user.uid} />
 }
 
 export default App
