@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Plus, Trash2, Edit2, Check, X } from 'lucide-react'
+import { Plus, Trash2, Edit2, Check, X, RotateCcw } from 'lucide-react'
 import type { useStore } from '../store'
 
 interface Props {
@@ -8,6 +8,12 @@ interface Props {
 
 export function Instellingen({ store }: Props) {
   const { packPresets = [] } = store
+  const [restoreStatus, setRestoreStatus] = useState<'idle' | 'ok' | 'leeg' | 'fout'>('idle')
+
+  const handleRestore = () => {
+    const result = store.restoreFromLocalStorage()
+    setRestoreStatus(result)
+  }
   const [newCategoryName, setNewCategoryName] = useState('')
   const [newItemTexts, setNewItemTexts] = useState<Record<string, string>>({})
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null)
@@ -43,6 +49,35 @@ export function Instellingen({ store }: Props) {
       <div className="page-header">
         <h1 className="page-title">Instellingen</h1>
         <p className="page-subtitle">Beheer je standaard paklijst-items</p>
+      </div>
+
+      {/* Data herstel */}
+      <div className="card" style={{ marginBottom: '1.5rem' }}>
+        <div className="card-header">
+          <span className="card-title">Data herstellen</span>
+        </div>
+        <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+          Open deze pagina op het apparaat waar je data mist en klik op de knop. De app zoekt naar
+          lokaal opgeslagen data op dit apparaat en zet die terug.
+        </p>
+        {restoreStatus === 'ok' && (
+          <div style={{ marginBottom: '1rem', padding: '0.75rem', borderRadius: 8, background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.25)', fontSize: '0.875rem', color: '#4ade80' }}>
+            Gelukt! Je data is hersteld. Ververs de pagina om alles te zien.
+          </div>
+        )}
+        {restoreStatus === 'leeg' && (
+          <div style={{ marginBottom: '1rem', padding: '0.75rem', borderRadius: 8, background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', fontSize: '0.875rem', color: '#f87171' }}>
+            Geen lokale data gevonden op dit apparaat. Probeer het op een ander apparaat.
+          </div>
+        )}
+        {restoreStatus === 'fout' && (
+          <div style={{ marginBottom: '1rem', padding: '0.75rem', borderRadius: 8, background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', fontSize: '0.875rem', color: '#f87171' }}>
+            Er ging iets mis. Probeer het opnieuw.
+          </div>
+        )}
+        <button className="btn btn-secondary" onClick={handleRestore} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <RotateCcw size={15} /> Lokale data terugzetten
+        </button>
       </div>
 
       {/* Pack presets */}
