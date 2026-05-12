@@ -15,7 +15,10 @@ import {
   ArrowLeft,
   Menu,
   X,
+  LogOut,
 } from 'lucide-react'
+import { signOut } from 'firebase/auth'
+import { auth } from '../firebase'
 import './DashboardLayout.css'
 
 const navItems = [
@@ -81,6 +84,10 @@ export function DashboardLayout() {
             <ArrowLeft size={18} strokeWidth={1.5} />
             <span>Terug naar home</span>
           </NavLink>
+          <button className="dash-nav-item dash-logout" onClick={() => signOut(auth)}>
+            <LogOut size={18} strokeWidth={1.5} />
+            <span>Uitloggen</span>
+          </button>
         </div>
       </aside>
 

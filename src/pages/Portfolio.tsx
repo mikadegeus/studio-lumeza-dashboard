@@ -45,7 +45,7 @@ export function Portfolio({ store }: Props) {
 
   return (
     <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header">
         <div>
           <h1 className="page-title">Portfolio</h1>
           <p className="page-subtitle">Koppel je beste werk aan klanten en pakketten</p>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { db } from './firebase'
 import type { StoreState, Client, PackageOption, Shoot, Task, PortfolioItem, Project, ProjectNote, ProjectStatus, Lead, NetworkContact, PackListItem, Note, Invoice, CheatsheetCategory, CheatsheetTip } from './types'
-
-const STORAGE_KEY = 'studio-lumeza-data'
 
 const defaultPackages: PackageOption[] = [
   {
@@ -205,38 +205,47 @@ const defaultState: StoreState = {
   ],
 }
 
-function loadState(): StoreState {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw) {
-      const parsed = JSON.parse(raw)
-      // Merge with defaults to handle new fields
-      return { ...defaultState, ...parsed }
-    }
-  } catch {
-    // ignore parse errors
-  }
-  return defaultState
-}
-
-function saveState(state: StoreState) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+function toFirestore(state: StoreState) {
+  // Strip undefined values which Firestore doesn't accept
+  return JSON.parse(JSON.stringify(state))
 }
 
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 7)
 }
 
-export function useStore() {
-  const [state, setState] = useState<StoreState>(loadState)
+export function useStore(userId: string) {
+  const [state, setState] = useState<StoreState>(defaultState)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    saveState(state)
-  }, [state])
+    const docRef = doc(db, 'users', userId)
+    getDoc(docRef).then(snap => {
+      if (snap.exists()) {
+        setState({ ...defaultState, ...snap.data() as StoreState })
+      } else {
+        // First login: migrate localStorage data if present, otherwise use defaults
+        try {
+          const raw = localStorage.getItem('studio-lumeza-data')
+          const initial: StoreState = raw ? { ...defaultState, ...JSON.parse(raw) } : defaultState
+          setDoc(docRef, toFirestore(initial))
+          setState(initial)
+          localStorage.removeItem('studio-lumeza-data')
+        } catch {
+          setDoc(docRef, toFirestore(defaultState))
+        }
+      }
+      setLoading(false)
+    })
+  }, [userId])
 
   const update = useCallback((updater: (prev: StoreState) => StoreState) => {
-    setState(prev => updater(prev))
-  }, [])
+    setState(prev => {
+      const next = updater(prev)
+      setDoc(doc(db, 'users', userId), toFirestore(next))
+      return next
+    })
+  }, [userId])
 
   // Clients
   const addClient = useCallback((client: Omit<Client, 'id' | 'createdAt'>) => {
@@ -504,6 +513,7 @@ export function useStore() {
 
   return {
     ...state,
+    loading,
     addClient, updateClient, deleteClient,
     addPackage, updatePackage, deletePackage,
     addShoot, updateShoot, deleteShoot,

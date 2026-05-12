@@ -51,7 +51,7 @@ export function Cheatsheet({ store }: Props) {
 
   return (
     <div className="cheatsheet-page">
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header">
         <div>
           <h1 className="page-title">Cheatsheet</h1>
           <p className="page-subtitle">Camera-instellingen per type shoot</p>

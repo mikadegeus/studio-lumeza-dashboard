@@ -47,7 +47,7 @@ export function Planning({ store }: Props) {
 
   return (
     <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header">
         <div>
           <h1 className="page-title">Planning</h1>
           <p className="page-subtitle">Beheer je taken en deadlines</p>
@@ -76,7 +76,7 @@ export function Planning({ store }: Props) {
       </div>
 
       {/* Filter tabs */}
-      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+      <div className="filter-tabs" style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
         {[
           { key: 'all' as const, label: 'Alles' },
           { key: 'open' as const, label: 'Open' },

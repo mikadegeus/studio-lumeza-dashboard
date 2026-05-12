@@ -110,7 +110,7 @@ export function Projecten({ store }: Props) {
 
   return (
     <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header">
         <div>
           <h1 className="page-title">Projecten</h1>
           <p className="page-subtitle">{projects.length} project{projects.length !== 1 ? 'en' : ''}</p>
@@ -121,7 +121,7 @@ export function Projecten({ store }: Props) {
       </div>
 
       {/* Filter tabs */}
-      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+      <div className="filter-tabs" style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
         {[
           { key: 'all' as const, label: 'Alles', icon: FolderOpen },
           { key: 'shoot' as const, label: 'Shoots', icon: Camera },

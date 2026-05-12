@@ -90,6 +90,18 @@
   font-size: 0.8125rem;
 }
 
+.dash-logout {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  width: 100%;
+  margin-top: 2px;
+}
+
+.dash-logout:hover {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.08);
+}
+
 .dash-overlay {
   display: none;
 }
@@ -103,6 +115,9 @@
 
 /* ─── Shared dashboard components ─── */
 .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 2rem;
 }
 
